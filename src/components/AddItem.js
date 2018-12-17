@@ -16,12 +16,10 @@ const input_alignment = {
 
 
 class AddItem extends Component {
-    state = {
-        quantity: 0,
-        products: null 
-    }
-    onSubmit = (e) => {
-        e.preventDefault()
+    onSubmit = (id) => {
+        id.prevent.default()
+        const selectedItem = this.props.products.filter(item => this.props.product.id === id)
+        
     }
     _onChange = e => {
         this.setState({
@@ -36,10 +34,10 @@ class AddItem extends Component {
             <div>
                 <h3 style={header_alignment.styles}>Quantity</h3>  
                  <form onSubmit={ this.onSubmit }>
-                 <input style={input_alignment.styles} onChange={this._onChange} type="text" name="quantity" value={this.state.quantity}></input>
+                 <input style={input_alignment.styles} onChange={this._onChange} type="text" name="quantity" value={this.props.quantity}></input>
                         <div>
                          <h3 style={header_alignment.styles}>Products</h3>  
-                        <select onChange={this._onChange} style={input_alignment.styles} name="products" value={this.state.products}>
+                        <select onChange={this._onChange} style={input_alignment.styles} name="products" value={this.props.products}>
                           {productList}
                         </select>
                         <div>

@@ -36,36 +36,33 @@ class App extends Component {
     
   }
 
-  itemsToBeSubmitted = (newProduct) => {
-    this.setState(prevState => {
-      let newState = []
-      let itemsInCart = this.state.itemsInCart
-      for(let i = 0; i < itemsInCart.length; i++){
-         newState.push(itemsInCart[i])
-      }
-      let products = this.state.products
-      for(let i = 0; i < products; i++){
-      newState.push(products[i])
-      }
-      return {
-        itemsInCart: newState
-      }
-    })
-  }
+  itemsToBeSubmitted = (id) => {
+     const individualItem = this.state.products.filter(product => product.id === id)
+     console.log(individualItem)
+     this.setState(prevState => {
+       let cartItems = this.state.itemsInCart
+       for(let i = 0; i < this.state.products.length; i++){
+         if(this.state.products[i].id === id){
+           cartItems.push(this.state.products[i])
+         }
+       }
+       return {cartItems};
+     })
+    }
 
   render() {
-  return (
+    return (
       <>
      <CartHeader />
-     <CartItemsContainer CartItemsList={this.state.itemsInCart}/>
+     <CartItemsContainer CartItemsList={this.state.itemsInCart} itemsToBeSubmitted={this.itemsToBeSubmitted}/>
      <p style={totalStyle.styles}>Total Price in Cents: {this.state.itemsInCart.reduce((accumulator, item) => {
-       return accumulator + item.priceInCents
+       return accumulator + item.product.priceInCents
      }, 0)}</p>
      <AddItem products={this.state.products} addCartItem={this.itemsToBeSubmitted}/>
      <CartFooter CopyrightYear={2018}/>
      </>
-    );
+      );
+    }
   }
-}
 
 export default App;
