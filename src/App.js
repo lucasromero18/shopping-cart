@@ -28,27 +28,26 @@ class App extends Component {
     ],
 
    itemsInCart: [
-      { id: 1, product: { id: 40, name: 'Mediocre Iron Watch', priceInCents: 399 }, quantity: 1 },
-      { id: 2, product: { id: 41, name: 'Heavy Duty Concrete Plate', priceInCents: 499 }, quantity: 2 },
-      { id: 3, product: { id: 42, name: 'Intelligent Paper Knife', priceInCents: 1999 }, quantity: 1 },
-    ]
+    { id: 1, product: { id: 40, name: 'Mediocre Iron Watch', priceInCents: 399 }, quantity: 1 },
+    { id: 2, product: { id: 41, name: 'Heavy Duty Concrete Plate', priceInCents: 499 }, quantity: 2 },
+    { id: 3, product: { id: 42, name: 'Intelligent Paper Knife', priceInCents: 1999 }, quantity: 1 },
+  ]
 
     
   }
 
-  itemsToBeSubmitted = (id) => {
-     const individualItem = this.state.products.filter(product => product.id === id)
-     console.log(individualItem)
-     this.setState(prevState => {
-       let cartItems = this.state.itemsInCart
-       for(let i = 0; i < this.state.products.length; i++){
-         if(this.state.products[i].id === id){
-           cartItems.push(this.state.products[i])
-         }
-       }
-       return {cartItems};
-     })
+  itemsToBeSubmitted = ({productId, quantity}) => {
+    console.log('the thing', productId)
+
+    let newObj = {
+      id: 4,
+      product: this.state.products.filter(product => product.id == productId)[0],
+      quantity: quantity
     }
+    this.setState({
+      itemsInCart: [...this.state.itemsInCart, newObj]
+    })
+  }
 
   render() {
     return (
